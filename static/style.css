@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #2e84cb;
+    color: white;
+    text-align: center;
+    padding: 1px;
+    font-size: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#map {
+    height: 500px;
+}
+
+#parking-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#parking-table th,
+#parking-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#parking-table th {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #2e84cb;
+    color: white;
+}
