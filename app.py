@@ -1,25 +1,28 @@
 from flask import Flask, render_template
 from apscheduler.schedulers.background import BackgroundScheduler
-import requests
+from pymongo import MongoClient
+from pymongo.server_api import ServerApi
+import logging, requests, os, json
+from utils.data_fetching import fetch_parking_data
 
+# Open Flask and Scheduler
 app = Flask(__name__)
+scheduler = BackgroundScheduler()
+
+# Log parameters
+logging.basicConfig(filename='parkinglots.log', level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
 
 # Define a global variable to store parking lot data
 parking_data = []
 
-def fetch_parking_data():
+def fetch_data():
     global parking_data
-    api_url = "https://datosabiertos.malaga.eu/recursos/aparcamientos/ocupappublicosmun/ocupappublicosmunfiware.json"
-    response = requests.get(api_url)
-    if response.status_code == 200:
-        parking_data = response.json()
-    else:
-        parking_data = []
+    parking_data = fetch_parking_data()
 
 # Schedule the data fetch every minute
-scheduler = BackgroundScheduler()
 scheduler.add_job(func=fetch_parking_data, trigger="interval", minutes=1)
 scheduler.start()
+
 
 # Route to render the map and table
 @app.route('/')
@@ -28,11 +31,10 @@ def index():
 
 @app.route('/map')
 def map():
-    return parking_data
+    return json.dumps(parking_data[0]['parkinglots'])
 
 if __name__ == '__main__':
-    # Initial fetch of data
-    fetch_parking_data()
 
     # Start the Flask app
+    fetch_data()
     app.run(debug=True)

@@ -6,7 +6,7 @@ var mapInitialized = false;
                     .then(response => response.json())
                     .then(data => {
                         if (!mapInitialized) {
-                            var map = L.map('map').setView([36.7132139, -4.4076681], 13);
+                            var map = L.map('map').setView([36.7132139, -4.4076681], 13);  // Adjust coordinates and zoom level
 
                             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                 attribution: '© OpenStreetMap contributors'
