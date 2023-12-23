@@ -24,9 +24,6 @@ def fetch_parking_data():
         print(e)
         logging.error(e)
 
-    # MongoDB cnnection parameters.
-    connection_url = f'mongodb+srv://vitor:{MONGODB_URL}@mastercluster.e1lyp47.mongodb.net/'
-
     # Define the aggregation pipeline to transform it and merge the parkinglots data into the 'parking_data' collection.
     pipeline = [
         {
@@ -60,7 +57,7 @@ def fetch_parking_data():
     ]
 
     # Connect to MongoDB and execute the aggregation pipeline.
-    with MongoClient(connection_url,server_api=ServerApi('1')) as client:
+    with MongoClient(MONGODB_URL,server_api=ServerApi('1')) as client:
         try:
             # The collection 'parkinglots' is used to fetch data from malaga's open data portal
             # then transform it and add it into a final parking-data collection
